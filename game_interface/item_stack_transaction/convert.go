@@ -223,6 +223,18 @@ func operationToProto(src item_stack_operation.ItemStackOperation) (*game_interf
 			TemplateSlot: uint32(op.TemplateSlot),
 			ResultItem:   expectedNewItemToProto(op.ResultItem),
 		}}}, nil
+	case item_stack_operation.BeaconPayment:
+		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_BeaconPayment{BeaconPayment: &game_interface_pb.BeaconPaymentOperation{
+			Payment:         slotLocationToProto(op.PaymentPath),
+			PrimaryEffect:   op.PrimaryEffect,
+			SecondaryEffect: op.SecondaryEffect,
+		}}}, nil
+	case item_stack_operation.BeaconPaymentFromInventory:
+		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_BeaconPaymentFromInventory{BeaconPaymentFromInventory: &game_interface_pb.BeaconPaymentFromInventoryOperation{
+			PaymentSlot:     uint32(op.PaymentSlot),
+			PrimaryEffect:   op.PrimaryEffect,
+			SecondaryEffect: op.SecondaryEffect,
+		}}}, nil
 	default:
 		return nil, fmt.Errorf("unknown item stack transaction operation %T", src)
 	}

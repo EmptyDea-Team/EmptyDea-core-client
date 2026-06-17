@@ -265,3 +265,33 @@ func (i *ItemStackTransaction) TrimmingFromInventory(
 	})
 	return i
 }
+
+// BeaconPayment 将 paymentPath 处的 1 个物品作为信标支付物品，
+// 并提交信标主/副效果的选择。
+func (i *ItemStackTransaction) BeaconPayment(
+	paymentPath resources_control.SlotLocation,
+	primaryEffect int32,
+	secondaryEffect int32,
+) *ItemStackTransaction {
+	i.operations = append(i.operations, item_stack_operation.BeaconPayment{
+		PaymentPath:     paymentPath,
+		PrimaryEffect:   primaryEffect,
+		SecondaryEffect: secondaryEffect,
+	})
+	return i
+}
+
+// BeaconPaymentFromInventory 将背包中 paymentSlot 处的 1 个物品
+// 作为信标支付物品，并提交信标主/副效果的选择。
+func (i *ItemStackTransaction) BeaconPaymentFromInventory(
+	paymentSlot resources_control.SlotID,
+	primaryEffect int32,
+	secondaryEffect int32,
+) *ItemStackTransaction {
+	i.operations = append(i.operations, item_stack_operation.BeaconPaymentFromInventory{
+		PaymentSlot:     paymentSlot,
+		PrimaryEffect:   primaryEffect,
+		SecondaryEffect: secondaryEffect,
+	})
+	return i
+}

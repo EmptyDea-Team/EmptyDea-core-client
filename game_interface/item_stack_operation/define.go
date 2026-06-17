@@ -9,6 +9,7 @@ const (
 	IDItemStackOperationHighLevelLooming
 	IDItemStackOperationHighLevelCrafting
 	IDItemStackOperationHighLevelTrimming
+	IDItemStackOperationHighLevelBeaconPayment
 )
 
 // ItemStackOperation 指示所有可提交给远端服务端执行的物品操作。
