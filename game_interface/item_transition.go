@@ -6,6 +6,7 @@ import (
 	resources_control_client "github.com/EmptyDea-Team/EmptyDea-core-client/resources_control"
 
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
+	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
 )
 
 // ItemTransition 是远程物品状态转移实现。
@@ -13,12 +14,12 @@ type ItemTransition struct {
 	client game_interface_pb.ItemTransitionServiceClient
 }
 
-func (h *ItemTransition) Transition(ctx context.Context, src []ItemInfoWithSlot, dst []ItemInfoWithSlot, srcWindowID resources_control_client.WindowID, dstWindowID resources_control_client.WindowID) (bool, error) {
+func (h *ItemTransition) Transition(ctx context.Context, src []ItemInfoWithSlot, dst []ItemInfoWithSlot, srcWindowName resources_control_client.WindowName, dstWindowName resources_control_client.WindowName) (bool, error) {
 	resp, err := h.client.Transition(ctx, &game_interface_pb.TransitionRequest{
-		Src:         itemInfoWithSlotsToProto(src),
-		Dst:         itemInfoWithSlotsToProto(dst),
-		SrcWindowID: int32(srcWindowID),
-		DstWindowID: int32(dstWindowID),
+		Src:           itemInfoWithSlotsToProto(src),
+		Dst:           itemInfoWithSlotsToProto(dst),
+		SrcWindowName: windowNameToProto(srcWindowName),
+		DstWindowName: windowNameToProto(dstWindowName),
 	})
 	return transitionResult(resp, err)
 }
@@ -55,4 +56,11 @@ func transitionResult(resp *game_interface_pb.TransitionResponse, err error) (bo
 		return false, err
 	}
 	return resp.Success, nil
+}
+
+func windowNameToProto(src resources_control_client.WindowName) *resources_control_pb.WindowName {
+	return &resources_control_pb.WindowName{
+		WindowID:           int32(src.WindowID),
+		DynamicContainerID: uint32(src.DynamicContainerID),
+	}
 }

@@ -9,19 +9,19 @@ import (
 
 // Inventory 描述远程单个库存。
 type Inventory struct {
-	windowID WindowID
-	client   resources_control_pb.InventoryServiceClient
+	windowName WindowName
+	client     resources_control_pb.InventoryServiceClient
 }
 
 // GetItemStack 返回当前库存中物品栏编号为 slotID 的物品堆栈信息。
 func (i *Inventory) GetItemStack(ctx context.Context, slotID SlotID) (item *protocol_pb.ItemInstance, err error) {
-	item, _, err = (&Inventories{client: i.client}).GetItemStack(ctx, i.windowID, slotID)
+	item, _, err = (&Inventories{client: i.client}).GetItemStack(ctx, i.windowName, slotID)
 	return item, err
 }
 
 // GetAllItemStack 列出当前库存的全部物品堆栈实例。
 func (i *Inventory) GetAllItemStack(ctx context.Context) (mapping map[SlotID]*protocol_pb.ItemInstance, err error) {
-	mapping, _, err = (&Inventories{client: i.client}).GetAllItemStack(ctx, i.windowID)
+	mapping, _, err = (&Inventories{client: i.client}).GetAllItemStack(ctx, i.windowName)
 	return mapping, err
 }
 
@@ -30,23 +30,23 @@ type Inventories struct {
 	client resources_control_pb.InventoryServiceClient
 }
 
-// GetInventory 返回窗口 ID 为 windowID 的库存。
-func (i *Inventories) GetInventory(ctx context.Context, windowID WindowID) (inventory *Inventory, existed bool, err error) {
-	resp, err := i.client.GetInventory(ctx, &resources_control_pb.GetInventoryRequest{WindowID: int32(windowID)})
+// GetInventory 返回窗口名为 windowName 的库存。
+func (i *Inventories) GetInventory(ctx context.Context, windowName WindowName) (inventory *Inventory, existed bool, err error) {
+	resp, err := i.client.GetInventory(ctx, &resources_control_pb.GetInventoryRequest{WindowName: windowNameToProto(windowName)})
 	if err != nil {
 		return nil, false, err
 	}
 	if !resp.Found {
 		return nil, false, nil
 	}
-	return &Inventory{windowID: windowID, client: i.client}, true, nil
+	return &Inventory{windowName: windowName, client: i.client}, true, nil
 }
 
-// GetItemStack 加载位于 windowID 的库存中索引为 slotID 的物品。
-func (i *Inventories) GetItemStack(ctx context.Context, windowID WindowID, slotID SlotID) (item *protocol_pb.ItemInstance, inventoryExisted bool, err error) {
+// GetItemStack 加载位于 windowName 的库存中索引为 slotID 的物品。
+func (i *Inventories) GetItemStack(ctx context.Context, windowName WindowName, slotID SlotID) (item *protocol_pb.ItemInstance, inventoryExisted bool, err error) {
 	resp, err := i.client.GetItemStack(ctx, &resources_control_pb.GetItemStackRequest{
-		WindowID: int32(windowID),
-		SlotID:   uint32(slotID),
+		WindowName: windowNameToProto(windowName),
+		SlotID:     uint32(slotID),
 	})
 	if err != nil {
 		return nil, false, err
@@ -60,9 +60,9 @@ func (i *Inventories) GetItemStack(ctx context.Context, windowID WindowID, slotI
 	return resp.Item, true, nil
 }
 
-// GetAllItemStack 列出窗口 ID 为 windowID 的库存中的所有物品堆栈实例。
-func (i *Inventories) GetAllItemStack(ctx context.Context, windowID WindowID) (mapping map[SlotID]*protocol_pb.ItemInstance, inventoryExisted bool, err error) {
-	resp, err := i.client.GetAllItemStacks(ctx, &resources_control_pb.GetAllItemStacksRequest{WindowID: int32(windowID)})
+// GetAllItemStack 列出窗口名为 windowName 的库存中的所有物品堆栈实例。
+func (i *Inventories) GetAllItemStack(ctx context.Context, windowName WindowName) (mapping map[SlotID]*protocol_pb.ItemInstance, inventoryExisted bool, err error) {
+	resp, err := i.client.GetAllItemStacks(ctx, &resources_control_pb.GetAllItemStacksRequest{WindowName: windowNameToProto(windowName)})
 	if err != nil {
 		return nil, false, err
 	}
@@ -78,15 +78,15 @@ func (i *Inventories) GetAllItemStack(ctx context.Context, windowID WindowID) (m
 	return mapping, true, nil
 }
 
-// GetAllWindowID 列出当前所有库存的窗口 ID。
-func (i *Inventories) GetAllWindowID(ctx context.Context) (result []WindowID, err error) {
-	resp, err := i.client.ListWindowIDs(ctx, &resources_control_pb.ListWindowIDsRequest{})
+// GetAllWindowName 列出当前所有库存的窗口名。
+func (i *Inventories) GetAllWindowName(ctx context.Context) (result []WindowName, err error) {
+	resp, err := i.client.ListWindowNames(ctx, &resources_control_pb.ListWindowNamesRequest{})
 	if err != nil {
 		return nil, err
 	}
-	result = make([]WindowID, 0, len(resp.WindowIDs))
-	for _, windowID := range resp.WindowIDs {
-		result = append(result, WindowID(windowID))
+	result = make([]WindowName, 0, len(resp.WindowNames))
+	for _, windowName := range resp.WindowNames {
+		result = append(result, windowNameFromProto(windowName))
 	}
 	return result, nil
 }
@@ -94,4 +94,18 @@ func (i *Inventories) GetAllWindowID(ctx context.Context) (result []WindowID, er
 // NewAirItemInstance 返回一个新的空气物品堆栈实例。
 func NewAirItemInstance() (item *protocol_pb.ItemInstance) {
 	return &protocol_pb.ItemInstance{}
+}
+
+func windowNameToProto(src WindowName) *resources_control_pb.WindowName {
+	return &resources_control_pb.WindowName{
+		WindowID:           int32(src.WindowID),
+		DynamicContainerID: uint32(src.DynamicContainerID),
+	}
+}
+
+func windowNameFromProto(src *resources_control_pb.WindowName) WindowName {
+	if src == nil {
+		return WindowName{}
+	}
+	return NewWindowName(WindowID(src.WindowID), DynamicContainerID(src.DynamicContainerID))
 }

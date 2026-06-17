@@ -5,7 +5,6 @@ import (
 
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
-	protocol_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol"
 	"github.com/EmptyDea-Team/EmptyDea-core-client/game_interface/item_stack_operation"
 	"github.com/EmptyDea-Team/EmptyDea-core-client/resources_control"
 	"google.golang.org/protobuf/types/known/structpb"
@@ -13,15 +12,18 @@ import (
 
 func slotLocationToProto(src resources_control.SlotLocation) *resources_control_pb.SlotLocation {
 	return &resources_control_pb.SlotLocation{
-		WindowID: int32(src.WindowID),
-		SlotID:   uint32(src.SlotID),
+		WindowName: &resources_control_pb.WindowName{
+			WindowID:           int32(src.WindowID),
+			DynamicContainerID: uint32(src.DynamicContainerID),
+		},
+		SlotID: uint32(src.SlotID),
 	}
 }
 
 func inventorySlotLocation(slot resources_control.SlotID) resources_control.SlotLocation {
 	return resources_control.SlotLocation{
-		WindowID: resources_control.WindowID(protocol_pb.WindowIDEnum_WindowIDInventory),
-		SlotID:   slot,
+		WindowName: resources_control.WindowNameInventory,
+		SlotID:     slot,
 	}
 }
 
