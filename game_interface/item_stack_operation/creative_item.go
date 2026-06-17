@@ -31,3 +31,19 @@ func (CreativeItemToInventory) ID() uint8 {
 func (CreativeItemToInventory) CanInline() bool {
 	return false
 }
+
+// CreativeItemToDynamicContainer 指示从创造物品栏获取物品到动态容器槽位的操作。
+type CreativeItemToDynamicContainer struct {
+	CreativeItemNetworkID uint32
+	DynamicContainerID    resources_control.DynamicContainerID
+	Slot                  resources_control.SlotID
+	Count                 uint8
+}
+
+func (CreativeItemToDynamicContainer) ID() uint8 {
+	return IDItemStackOperationCreativeItem
+}
+
+func (CreativeItemToDynamicContainer) CanInline() bool {
+	return false
+}

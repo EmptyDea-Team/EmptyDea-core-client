@@ -30,6 +30,21 @@ func (DropInventoryItem) CanInline() bool {
 	return true
 }
 
+// DropDynamicContainerItem 指示丢弃动态容器槽位物品的操作。
+type DropDynamicContainerItem struct {
+	DynamicContainerID resources_control.DynamicContainerID
+	Slot               resources_control.SlotID
+	Count              uint8
+}
+
+func (DropDynamicContainerItem) ID() uint8 {
+	return IDItemStackOperationDrop
+}
+
+func (DropDynamicContainerItem) CanInline() bool {
+	return true
+}
+
 // DropContainerItem 指示丢弃已打开容器槽位物品的操作。
 type DropContainerItem struct {
 	Slot  resources_control.SlotID

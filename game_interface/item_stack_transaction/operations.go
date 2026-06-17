@@ -27,6 +27,61 @@ func (i *ItemStackTransaction) MoveBetweenInventory(source resources_control.Slo
 	return i
 }
 
+func dynamicContainerWindowName(dynamicContainerID resources_control.DynamicContainerID) resources_control.WindowName {
+	return resources_control.NewWindowName(resources_control.WindowIDDynamic, dynamicContainerID)
+}
+
+// MoveBetweenDynamicContainer 将动态容器中 source 处的物品
+// 移动到同一动态容器的 destination 处，且只移动 count 个物品。
+func (i *ItemStackTransaction) MoveBetweenDynamicContainer(
+	dynamicContainerID resources_control.DynamicContainerID,
+	source resources_control.SlotID,
+	destination resources_control.SlotID,
+	count uint8,
+) *ItemStackTransaction {
+	i.operations = append(i.operations, item_stack_operation.MoveBetweenDynamicContainer{
+		DynamicContainerID: dynamicContainerID,
+		Source:             source,
+		Destination:        destination,
+		Count:              count,
+	})
+	return i
+}
+
+// MoveToDynamicContainer 将背包中 source 处的物品移动到动态容器
+// 的 destination 处，且只移动 count 个物品。
+func (i *ItemStackTransaction) MoveToDynamicContainer(
+	source resources_control.SlotID,
+	dynamicContainerID resources_control.DynamicContainerID,
+	destination resources_control.SlotID,
+	count uint8,
+) *ItemStackTransaction {
+	i.operations = append(i.operations, item_stack_operation.MoveToDynamicContainer{
+		Source:             source,
+		DynamicContainerID: dynamicContainerID,
+		Destination:        destination,
+		Count:              count,
+	})
+	return i
+}
+
+// MoveFromDynamicContainer 将动态容器中 source 处的物品移动到背包
+// 的 destination 处，且只移动 count 个物品。
+func (i *ItemStackTransaction) MoveFromDynamicContainer(
+	dynamicContainerID resources_control.DynamicContainerID,
+	source resources_control.SlotID,
+	destination resources_control.SlotID,
+	count uint8,
+) *ItemStackTransaction {
+	i.operations = append(i.operations, item_stack_operation.MoveFromDynamicContainer{
+		DynamicContainerID: dynamicContainerID,
+		Source:             source,
+		Destination:        destination,
+		Count:              count,
+	})
+	return i
+}
+
 // MoveBetweenContainer 将已打开容器中 source 处的物品
 // 移动到已打开容器的 destination 处，且只移动 count 个物品。
 func (i *ItemStackTransaction) MoveBetweenContainer(source resources_control.SlotID, destination resources_control.SlotID, count uint8) *ItemStackTransaction {
@@ -101,6 +156,35 @@ func (i *ItemStackTransaction) SwapBetweenInventory(source resources_control.Slo
 	return i
 }
 
+// SwapBetweenDynamicContainer 交换同一动态容器中 source 和 destination 处的物品。
+func (i *ItemStackTransaction) SwapBetweenDynamicContainer(
+	dynamicContainerID resources_control.DynamicContainerID,
+	source resources_control.SlotID,
+	destination resources_control.SlotID,
+) *ItemStackTransaction {
+	i.operations = append(i.operations, item_stack_operation.SwapBetweenDynamicContainer{
+		DynamicContainerID: dynamicContainerID,
+		Source:             source,
+		Destination:        destination,
+	})
+	return i
+}
+
+// SwapInventoryBetweenDynamicContainer 交换背包中 source 处和动态容器
+// destination 处的物品。
+func (i *ItemStackTransaction) SwapInventoryBetweenDynamicContainer(
+	source resources_control.SlotID,
+	dynamicContainerID resources_control.DynamicContainerID,
+	destination resources_control.SlotID,
+) *ItemStackTransaction {
+	i.operations = append(i.operations, item_stack_operation.SwapInventoryBetweenDynamicContainer{
+		Source:             source,
+		DynamicContainerID: dynamicContainerID,
+		Destination:        destination,
+	})
+	return i
+}
+
 // SwapInventoryBetweenContainer 交换背包中 source
 // 处和已打开容器 destination 处的物品。
 func (i *ItemStackTransaction) SwapInventoryBetweenContainer(source resources_control.SlotID, destination resources_control.SlotID) *ItemStackTransaction {
@@ -130,6 +214,20 @@ func (i *ItemStackTransaction) DropInventoryItem(slot resources_control.SlotID, 
 	return i
 }
 
+// DropDynamicContainerItem 将动态容器 slot 处的物品丢出，且只丢出 count 个。
+func (i *ItemStackTransaction) DropDynamicContainerItem(
+	dynamicContainerID resources_control.DynamicContainerID,
+	slot resources_control.SlotID,
+	count uint8,
+) *ItemStackTransaction {
+	i.operations = append(i.operations, item_stack_operation.DropDynamicContainerItem{
+		DynamicContainerID: dynamicContainerID,
+		Slot:               slot,
+		Count:              count,
+	})
+	return i
+}
+
 // DropContainerItem 将已打开容器 slot 处的物品丢出，且只丢出 count 个。
 func (i *ItemStackTransaction) DropContainerItem(slot resources_control.SlotID, count uint8) *ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.DropContainerItem{
@@ -155,6 +253,23 @@ func (i *ItemStackTransaction) GetCreativeItem(creativeItemNetworkID uint32, slo
 func (i *ItemStackTransaction) GetCreativeItemToInventory(creativeItemNetworkID uint32, slot resources_control.SlotID, count uint8) *ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.CreativeItemToInventory{
 		CreativeItemNetworkID: creativeItemNetworkID,
+		Slot:                  slot,
+		Count:                 count,
+	})
+	return i
+}
+
+// GetCreativeItemToDynamicContainer 从创造物品栏获取创造物品网络 ID 为
+// creativeItemNetworkID 的物品到动态容器 slot 处，且只移动 count 个物品。
+func (i *ItemStackTransaction) GetCreativeItemToDynamicContainer(
+	creativeItemNetworkID uint32,
+	dynamicContainerID resources_control.DynamicContainerID,
+	slot resources_control.SlotID,
+	count uint8,
+) *ItemStackTransaction {
+	i.operations = append(i.operations, item_stack_operation.CreativeItemToDynamicContainer{
+		CreativeItemNetworkID: creativeItemNetworkID,
+		DynamicContainerID:    dynamicContainerID,
 		Slot:                  slot,
 		Count:                 count,
 	})

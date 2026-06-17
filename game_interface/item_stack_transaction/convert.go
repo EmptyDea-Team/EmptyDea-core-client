@@ -27,6 +27,20 @@ func inventorySlotLocation(slot resources_control.SlotID) resources_control.Slot
 	}
 }
 
+func inventorySlotLocationToProto(slot resources_control.SlotID) *resources_control_pb.SlotLocation {
+	return slotLocationToProto(inventorySlotLocation(slot))
+}
+
+func dynamicContainerSlotLocation(
+	dynamicContainerID resources_control.DynamicContainerID,
+	slot resources_control.SlotID,
+) resources_control.SlotLocation {
+	return resources_control.SlotLocation{
+		WindowName: dynamicContainerWindowName(dynamicContainerID),
+		SlotID:     slot,
+	}
+}
+
 func moveBySlot(id string, source resources_control.SlotID, destination resources_control.SlotID, count uint8) *game_interface_pb.MoveBySlotRequest {
 	return &game_interface_pb.MoveBySlotRequest{
 		TransactionID: id,
@@ -104,6 +118,37 @@ func operationToProto(src item_stack_operation.ItemStackOperation) (*game_interf
 			DstSlot: uint32(op.Destination),
 			Count:   uint32(op.Count),
 		}}}, nil
+	case item_stack_operation.MoveBetweenDynamicContainer:
+		windowName := dynamicContainerWindowName(op.DynamicContainerID)
+		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_MoveItem{MoveItem: &game_interface_pb.MoveItemOperation{
+			Source: slotLocationToProto(resources_control.SlotLocation{
+				WindowName: windowName,
+				SlotID:     op.Source,
+			}),
+			Destination: slotLocationToProto(resources_control.SlotLocation{
+				WindowName: windowName,
+				SlotID:     op.Destination,
+			}),
+			Count: uint32(op.Count),
+		}}}, nil
+	case item_stack_operation.MoveToDynamicContainer:
+		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_MoveItem{MoveItem: &game_interface_pb.MoveItemOperation{
+			Source: inventorySlotLocationToProto(op.Source),
+			Destination: slotLocationToProto(dynamicContainerSlotLocation(
+				op.DynamicContainerID,
+				op.Destination,
+			)),
+			Count: uint32(op.Count),
+		}}}, nil
+	case item_stack_operation.MoveFromDynamicContainer:
+		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_MoveItem{MoveItem: &game_interface_pb.MoveItemOperation{
+			Source: slotLocationToProto(dynamicContainerSlotLocation(
+				op.DynamicContainerID,
+				op.Source,
+			)),
+			Destination: inventorySlotLocationToProto(op.Destination),
+			Count:       uint32(op.Count),
+		}}}, nil
 	case item_stack_operation.MoveBetweenContainer:
 		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_MoveBetweenContainer{MoveBetweenContainer: &game_interface_pb.MoveBetweenContainerOperation{
 			SrcSlot: uint32(op.Source),
@@ -144,6 +189,26 @@ func operationToProto(src item_stack_operation.ItemStackOperation) (*game_interf
 			SrcSlot: uint32(op.Source),
 			DstSlot: uint32(op.Destination),
 		}}}, nil
+	case item_stack_operation.SwapBetweenDynamicContainer:
+		windowName := dynamicContainerWindowName(op.DynamicContainerID)
+		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_SwapItem{SwapItem: &game_interface_pb.SwapItemOperation{
+			Source: slotLocationToProto(resources_control.SlotLocation{
+				WindowName: windowName,
+				SlotID:     op.Source,
+			}),
+			Destination: slotLocationToProto(resources_control.SlotLocation{
+				WindowName: windowName,
+				SlotID:     op.Destination,
+			}),
+		}}}, nil
+	case item_stack_operation.SwapInventoryBetweenDynamicContainer:
+		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_SwapItem{SwapItem: &game_interface_pb.SwapItemOperation{
+			Source: inventorySlotLocationToProto(op.Source),
+			Destination: slotLocationToProto(dynamicContainerSlotLocation(
+				op.DynamicContainerID,
+				op.Destination,
+			)),
+		}}}, nil
 	case item_stack_operation.SwapInventoryBetweenContainer:
 		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_SwapInventoryBetweenContainer{SwapInventoryBetweenContainer: &game_interface_pb.SwapInventoryBetweenContainerOperation{
 			SrcSlot: uint32(op.Source),
@@ -157,6 +222,14 @@ func operationToProto(src item_stack_operation.ItemStackOperation) (*game_interf
 	case item_stack_operation.DropInventoryItem:
 		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_DropInventoryItem{DropInventoryItem: &game_interface_pb.DropInventoryItemOperation{
 			Slot:  uint32(op.Slot),
+			Count: uint32(op.Count),
+		}}}, nil
+	case item_stack_operation.DropDynamicContainerItem:
+		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_DropItem{DropItem: &game_interface_pb.DropItemOperation{
+			Slot: slotLocationToProto(dynamicContainerSlotLocation(
+				op.DynamicContainerID,
+				op.Slot,
+			)),
 			Count: uint32(op.Count),
 		}}}, nil
 	case item_stack_operation.DropContainerItem:
@@ -175,6 +248,15 @@ func operationToProto(src item_stack_operation.ItemStackOperation) (*game_interf
 			CreativeItemNetworkID: op.CreativeItemNetworkID,
 			Slot:                  uint32(op.Slot),
 			Count:                 uint32(op.Count),
+		}}}, nil
+	case item_stack_operation.CreativeItemToDynamicContainer:
+		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_GetCreativeItem{GetCreativeItem: &game_interface_pb.GetCreativeItemOperation{
+			CreativeItemNetworkID: op.CreativeItemNetworkID,
+			Destination: slotLocationToProto(dynamicContainerSlotLocation(
+				op.DynamicContainerID,
+				op.Slot,
+			)),
+			Count: uint32(op.Count),
 		}}}, nil
 	case item_stack_operation.Renaming:
 		return &game_interface_pb.ItemStackOperation{Operation: &game_interface_pb.ItemStackOperation_RenameItem{RenameItem: &game_interface_pb.RenameItemOperation{
