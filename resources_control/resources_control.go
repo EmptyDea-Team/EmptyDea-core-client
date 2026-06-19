@@ -9,13 +9,24 @@ import (
 	"google.golang.org/grpc"
 )
 
+// BotInfo 是当前机器人基础登录信息。
+type BotInfo struct {
+	// BotName 是机器人玩家名。
+	BotName string
+	// XUID 是机器人 Xbox 用户 ID。
+	XUID string
+	// EntityUniqueID 是机器人实体唯一 ID。
+	EntityUniqueID int64
+	// EntityRuntimeID 是机器人实体运行时 ID。
+	EntityRuntimeID uint64
+}
+
 // Resources 是面向 core/resources_control 风格的远程资源中心。
 type Resources struct {
 	resources      *ResourcesService
 	inventories    *Inventories
 	container      *ContainerManager
 	constantPacket *ConstantPacket
-	packet         *Packet
 	packetListener *PacketListener
 	uqholder       *UQHolder
 }
@@ -27,7 +38,6 @@ func New(conn grpc.ClientConnInterface) *Resources {
 		inventories:    &Inventories{client: resources_control_pb.NewInventoryServiceClient(conn)},
 		container:      &ContainerManager{client: resources_control_pb.NewContainerResourceServiceClient(conn)},
 		constantPacket: &ConstantPacket{client: resources_control_pb.NewConstantPacketServiceClient(conn)},
-		packet:         &Packet{client: resources_control_pb.NewPacketServiceClient(conn)},
 		packetListener: &PacketListener{client: resources_control_pb.NewPacketListenerServiceClient(conn)},
 		uqholder:       uqholder_client.New(resources_control_pb.NewUQHolderClient(conn)),
 	}
@@ -40,7 +50,7 @@ func (r *Resources) BotInfo(ctx context.Context) (info BotInfo, err error) {
 
 // WritePacket 用于向服务端发送数据包 p。
 func (r *Resources) WritePacket(ctx context.Context, p *packet_pb.Packet) (err error) {
-	return r.packet.WritePacket(ctx, p)
+	return r.resources.WritePacket(ctx, p)
 }
 
 // Inventories 返回库存的相关资源。
@@ -51,11 +61,6 @@ func (r *Resources) Inventories() (inventories *Inventories) {
 // Container 返回容器的相关资源。
 func (r *Resources) Container() (container *ContainerManager) {
 	return r.container
-}
-
-// Packet 返回数据包编码、解码和发送相关资源。
-func (r *Resources) Packet() (packet *Packet) {
-	return r.packet
 }
 
 // PacketListener 返回一个可撤销的数据包监听实现。
@@ -90,4 +95,10 @@ func (r *ResourcesService) BotInfo(ctx context.Context) (info BotInfo, err error
 		EntityUniqueID:  resp.EntityUniqueID,
 		EntityRuntimeID: resp.EntityRuntimeID,
 	}, nil
+}
+
+// WritePacket 用于向服务端发送数据包 p。
+func (r *ResourcesService) WritePacket(ctx context.Context, p *packet_pb.Packet) (err error) {
+	_, err = r.client.WritePacket(ctx, &resources_control_pb.WritePacketRequest{Packet: p})
+	return err
 }

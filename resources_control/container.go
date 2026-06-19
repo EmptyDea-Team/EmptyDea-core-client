@@ -7,6 +7,9 @@ import (
 	packet_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol/packet"
 )
 
+// ContainerID 是容器 ID。
+type ContainerID uint8
+
 // ContainerManager 描述远程容器资源。
 type ContainerManager struct {
 	client resources_control_pb.ContainerResourceServiceClient

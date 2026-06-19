@@ -16,12 +16,15 @@ type Frame struct {
 
 // ConnectionState 描述当前受管连接是否可用。
 type ConnectionState struct {
-	Connected   bool
+	// Connected 表示当前连接是否可用。
+	Connected bool
+	// CloseReason 是连接关闭原因。
 	CloseReason string
 }
 
 // ClosedEvent 是连接关闭事件。
 type ClosedEvent struct {
+	// Reason 是连接关闭原因。
 	Reason string
 }
 

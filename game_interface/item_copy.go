@@ -13,12 +13,16 @@ type (
 	ItemType uint8
 	// ItemInfo 是物品的信息。
 	ItemInfo struct {
-		Count    uint8
+		// Count 是物品数量。
+		Count uint8
+		// ItemType 指示该物品在单次操作中的物品类型。
 		ItemType ItemType
 	}
 	// ItemInfoWithSlot 是物品的信息，同时指示该物品位于哪个槽位。
 	ItemInfoWithSlot struct {
-		Slot     resources_control_client.SlotID
+		// Slot 是物品所在槽位。
+		Slot resources_control_client.SlotID
+		// ItemInfo 是该槽位上的物品信息。
 		ItemInfo ItemInfo
 	}
 )
@@ -28,6 +32,7 @@ type ItemCopy struct {
 	client game_interface_pb.ItemCopyServiceClient
 }
 
+// CopyItem 将 baseItems 描述的基础物品复制为 targetItems。
 func (i *ItemCopy) CopyItem(ctx context.Context, containerInfo *UseItemOnBlocks, baseItems []ItemInfoWithSlot, targetItems []*ItemInfo) error {
 	_, err := i.client.CopyItem(ctx, &game_interface_pb.CopyItemRequest{
 		ContainerInfo: containerInfo,

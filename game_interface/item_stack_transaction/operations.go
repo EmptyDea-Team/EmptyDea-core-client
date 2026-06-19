@@ -28,7 +28,7 @@ func (i *ItemStackTransaction) MoveBetweenInventory(source resources_control.Slo
 }
 
 func dynamicContainerWindowName(dynamicContainerID resources_control.DynamicContainerID) resources_control.WindowName {
-	return resources_control.NewWindowName(resources_control.WindowIDDynamic, dynamicContainerID)
+	return resources_control.NewDynamicContainerWindowName(dynamicContainerID)
 }
 
 // MoveBetweenDynamicContainer 将动态容器中 source 处的物品

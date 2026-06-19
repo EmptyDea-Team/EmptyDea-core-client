@@ -35,11 +35,11 @@ import (
 func main() {
 	ctx := context.Background()
 
-	c, conn, err := client.Dial(ctx, "127.0.0.1:50051")
+	c, err := client.Dial("tcp", "127.0.0.1:50051")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer conn.Close()
+	defer c.Close()
 
 	ok, err := c.Frame().Ping(ctx)
 	if err != nil {

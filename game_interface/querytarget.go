@@ -11,6 +11,7 @@ type Querytarget struct {
 	client game_interface_pb.QuerytargetServiceClient
 }
 
+// DoQuerytarget 对 target 执行 querytarget 查询并返回查询结果列表。
 func (q *Querytarget) DoQuerytarget(ctx context.Context, target string) ([]*game_interface_pb.TargetQueryingInfo, error) {
 	resp, err := q.client.DoQuerytarget(ctx, &game_interface_pb.DoQuerytargetRequest{Target: target})
 	if err != nil {
