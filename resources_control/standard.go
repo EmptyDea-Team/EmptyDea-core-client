@@ -1,9 +1,12 @@
 package resources_control
 
-import "github.com/EmptyDea-Team/EmptyDea-core-api/define"
+import (
+	resources_control_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control"
+	uqholder_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control/uqholder"
+)
 
 var (
-	_ define.Resources[
+	_ resources_control_api.Resources[
 		*Inventories,
 		*Inventory,
 		*ContainerManager,
@@ -21,13 +24,13 @@ var (
 		*MobEffect,
 	] = (*Resources)(nil)
 
-	_ define.Inventories[*Inventory] = (*Inventories)(nil)
-	_ define.Inventory               = (*Inventory)(nil)
-	_ define.ContainerManager        = (*ContainerManager)(nil)
-	_ define.ConstantPacket          = (*ConstantPacket)(nil)
-	_ define.PacketListener          = (*PacketListener)(nil)
+	_ resources_control_api.Inventories[*Inventory] = (*Inventories)(nil)
+	_ resources_control_api.Inventory               = (*Inventory)(nil)
+	_ resources_control_api.ContainerManager        = (*ContainerManager)(nil)
+	_ resources_control_api.ConstantPacket          = (*ConstantPacket)(nil)
+	_ resources_control_api.PacketListener          = (*PacketListener)(nil)
 
-	_ define.UQHolder[
+	_ uqholder_api.UQHolder[
 		*Bot,
 		*Players,
 		*Player,
@@ -39,13 +42,13 @@ var (
 		*MobEffect,
 	] = (*UQHolder)(nil)
 
-	_ define.Bot                                = (*Bot)(nil)
-	_ define.Players[*Player, *PlayerAbilities] = (*Players)(nil)
-	_ define.UQPlayer[*PlayerAbilities]         = (*Player)(nil)
-	_ define.PlayerAbilities                    = (*PlayerAbilities)(nil)
-	_ define.World[*GameRule]                   = (*World)(nil)
-	_ define.GameRule                           = (*GameRule)(nil)
-	_ define.Entities[*Entity, *MobEffect]      = (*Entities)(nil)
-	_ define.Entity[*MobEffect]                 = (*Entity)(nil)
-	_ define.MobEffect                          = (*MobEffect)(nil)
+	_ uqholder_api.Bot                                = (*Bot)(nil)
+	_ uqholder_api.Players[*Player, *PlayerAbilities] = (*Players)(nil)
+	_ uqholder_api.Player[*PlayerAbilities]           = (*Player)(nil)
+	_ uqholder_api.PlayerAbilities                    = (*PlayerAbilities)(nil)
+	_ uqholder_api.World[*GameRule]                   = (*World)(nil)
+	_ uqholder_api.GameRule                           = (*GameRule)(nil)
+	_ uqholder_api.Entities[*Entity, *MobEffect]      = (*Entities)(nil)
+	_ uqholder_api.Entity[*MobEffect]                 = (*Entity)(nil)
+	_ uqholder_api.MobEffect                          = (*MobEffect)(nil)
 )

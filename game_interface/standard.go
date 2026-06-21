@@ -1,13 +1,13 @@
 package game_interface
 
 import (
-	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
+	game_interface_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/game_interface"
 	"github.com/EmptyDea-Team/EmptyDea-core-client/game_interface/item_stack_operation"
 	"github.com/EmptyDea-Team/EmptyDea-core-client/game_interface/item_stack_transaction"
 )
 
 var (
-	_ define.GameInterface[
+	_ game_interface_api.GameInterface[
 		*Commands,
 		*StructureBackup,
 		*Querytarget,
@@ -26,17 +26,17 @@ var (
 		*AbilityBuilder,
 	] = (*GameInterface)(nil)
 
-	_ define.Commands                           = (*Commands)(nil)
-	_ define.StructureBackup                    = (*StructureBackup)(nil)
-	_ define.Querytarget                        = (*Querytarget)(nil)
-	_ define.Movement                           = (*Movement)(nil)
-	_ define.SetBlock                           = (*SetBlock)(nil)
-	_ define.Replaceitem                        = (*Replaceitem)(nil)
-	_ define.BotClick                           = (*BotClick)(nil)
-	_ define.ContainerOpenAndClose              = (*ContainerOpenAndClose)(nil)
-	_ define.ItemCopy                           = (*ItemCopy)(nil)
-	_ define.ItemTransition                     = (*ItemTransition)(nil)
-	_ define.PlayerKit[Player, *AbilityBuilder] = (*PlayerKit)(nil)
-	_ define.Player[*AbilityBuilder]            = Player{}
-	_ define.AbilityBuilder[*AbilityBuilder]    = (*AbilityBuilder)(nil)
+	_ game_interface_api.Commands                           = (*Commands)(nil)
+	_ game_interface_api.StructureBackup                    = (*StructureBackup)(nil)
+	_ game_interface_api.Querytarget                        = (*Querytarget)(nil)
+	_ game_interface_api.Movement                           = (*Movement)(nil)
+	_ game_interface_api.SetBlock                           = (*SetBlock)(nil)
+	_ game_interface_api.Replaceitem                        = (*Replaceitem)(nil)
+	_ game_interface_api.BotClick                           = (*BotClick)(nil)
+	_ game_interface_api.ContainerOpenAndClose              = (*ContainerOpenAndClose)(nil)
+	_ game_interface_api.ItemCopy                           = (*ItemCopy)(nil)
+	_ game_interface_api.ItemTransition                     = (*ItemTransition)(nil)
+	_ game_interface_api.PlayerKit[Player, *AbilityBuilder] = (*PlayerKit)(nil)
+	_ game_interface_api.Player[*AbilityBuilder]            = Player{}
+	_ game_interface_api.AbilityBuilder[*AbilityBuilder]    = (*AbilityBuilder)(nil)
 )

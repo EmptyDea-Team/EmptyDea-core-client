@@ -1,27 +1,27 @@
 package item_stack_operation
 
-import "github.com/EmptyDea-Team/EmptyDea-core-api/define"
+import item_stack_operation_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/game_interface/item_stack_operation"
 
 const (
 	// IDItemStackOperationMove 是物品移动操作编号。
-	IDItemStackOperationMove = define.IDItemStackOperationMove
+	IDItemStackOperationMove = item_stack_operation_api.IDItemStackOperationMove
 	// IDItemStackOperationSwap 是物品交换操作编号。
-	IDItemStackOperationSwap = define.IDItemStackOperationSwap
+	IDItemStackOperationSwap = item_stack_operation_api.IDItemStackOperationSwap
 	// IDItemStackOperationDrop 是物品丢弃操作编号。
-	IDItemStackOperationDrop = define.IDItemStackOperationDrop
+	IDItemStackOperationDrop = item_stack_operation_api.IDItemStackOperationDrop
 	// IDItemStackOperationCreativeItem 是创造物品获取操作编号。
-	IDItemStackOperationCreativeItem = define.IDItemStackOperationCreativeItem
+	IDItemStackOperationCreativeItem = item_stack_operation_api.IDItemStackOperationCreativeItem
 	// IDItemStackOperationHighLevelRenaming 是高层重命名操作编号。
-	IDItemStackOperationHighLevelRenaming = define.IDItemStackOperationHighLevelRenaming
+	IDItemStackOperationHighLevelRenaming = item_stack_operation_api.IDItemStackOperationHighLevelRenaming
 	// IDItemStackOperationHighLevelLooming 是高层织布机操作编号。
-	IDItemStackOperationHighLevelLooming = define.IDItemStackOperationHighLevelLooming
+	IDItemStackOperationHighLevelLooming = item_stack_operation_api.IDItemStackOperationHighLevelLooming
 	// IDItemStackOperationHighLevelCrafting 是高层合成操作编号。
-	IDItemStackOperationHighLevelCrafting = define.IDItemStackOperationHighLevelCrafting
+	IDItemStackOperationHighLevelCrafting = item_stack_operation_api.IDItemStackOperationHighLevelCrafting
 	// IDItemStackOperationHighLevelTrimming 是高层锻造台纹饰操作编号。
-	IDItemStackOperationHighLevelTrimming = define.IDItemStackOperationHighLevelTrimming
+	IDItemStackOperationHighLevelTrimming = item_stack_operation_api.IDItemStackOperationHighLevelTrimming
 	// IDItemStackOperationHighLevelBeaconPayment 是高层信标支付操作编号。
-	IDItemStackOperationHighLevelBeaconPayment = define.IDItemStackOperationHighLevelBeaconPayment
+	IDItemStackOperationHighLevelBeaconPayment = item_stack_operation_api.IDItemStackOperationHighLevelBeaconPayment
 )
 
 // ItemStackOperation 指示所有可提交给远端服务端执行的物品操作。
-type ItemStackOperation = define.ItemStackOperationData
+type ItemStackOperation = item_stack_operation_api.ItemStackOperation

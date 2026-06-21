@@ -51,7 +51,7 @@ func main() {
 
 ## 启动连接
 
-`FrameConfig` 来自 `EmptyDea-core-api/define`，在客户端中以类型别名导出：
+`FrameConfig` 来自 `EmptyDea-core-api/frame`，在客户端中以类型别名导出：
 
 ```go
 _, err := c.Frame().StartConnection(ctx, client.FrameConfig{

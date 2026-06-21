@@ -3,14 +3,14 @@ package resources_control
 import (
 	"context"
 
-	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
+	resources_control_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control"
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
 	packet_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol/packet"
 	uqholder_client "github.com/EmptyDea-Team/EmptyDea-core-client/resources_control/uqholder"
 	"google.golang.org/grpc"
 )
 
-type BotInfo = define.BotInfo
+type BotInfo = resources_control_api.BotInfo
 
 // Resources 是面向 core/resources_control 风格的远程资源中心。
 type Resources struct {

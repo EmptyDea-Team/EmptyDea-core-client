@@ -3,13 +3,13 @@ package resources_control
 import (
 	"context"
 
-	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
+	resources_control_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control"
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
 	packet_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol/packet"
 )
 
 // ContainerID 是容器 ID。
-type ContainerID = define.ContainerID
+type ContainerID = resources_control_api.ContainerID
 
 // ContainerManager 描述远程容器资源。
 type ContainerManager struct {

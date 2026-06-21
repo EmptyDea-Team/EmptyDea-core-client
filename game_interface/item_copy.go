@@ -3,17 +3,17 @@ package game_interface
 import (
 	"context"
 
-	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
+	game_interface_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/game_interface"
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
 )
 
 type (
 	// ItemType 指示该物品在单次操作中的物品类型。
-	ItemType = define.ItemType
+	ItemType = game_interface_api.ItemType
 	// ItemInfo 是物品的信息。
-	ItemInfo = define.ItemInfo
+	ItemInfo = game_interface_api.ItemInfo
 	// ItemInfoWithSlot 是物品的信息，同时指示该物品位于哪个槽位。
-	ItemInfoWithSlot = define.ItemInfoWithSlot
+	ItemInfoWithSlot = game_interface_api.ItemInfoWithSlot
 )
 
 // ItemCopy 是远程物品拷贝实现。

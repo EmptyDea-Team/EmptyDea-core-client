@@ -3,60 +3,60 @@ package resources_control
 import (
 	"context"
 
-	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
+	resources_control_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control"
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
 	protocol_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol"
 )
 
 type (
 	// SlotID 是单个物品栏槽位的索引，它是从 0 开始索引的。
-	SlotID = define.SlotID
+	SlotID = resources_control_api.SlotID
 	// WindowID 是机器人已打开(或持有)的库存的窗口 ID。
-	WindowID = define.WindowID
+	WindowID = resources_control_api.WindowID
 	// DynamicContainerID 是机器人已打开(或持有)的动态库存的容器 ID。
-	DynamicContainerID = define.DynamicContainerID
+	DynamicContainerID = resources_control_api.DynamicContainerID
 	// WindowName 唯一标识一个普通窗口或动态容器窗口。
-	WindowName = define.WindowName
+	WindowName = resources_control_api.WindowName
 	// SlotLocation 描述一个物品的所在的位置。
-	SlotLocation = define.SlotLocation
+	SlotLocation = resources_control_api.SlotLocation
 )
 
 const (
 	// WindowIDInventory 是玩家背包窗口 ID。
-	WindowIDInventory = define.WindowIDInventory
+	WindowIDInventory = resources_control_api.WindowIDInventory
 	// WindowIDOffHand 是副手窗口 ID。
-	WindowIDOffHand = define.WindowIDOffHand
+	WindowIDOffHand = resources_control_api.WindowIDOffHand
 	// WindowIDArmour 是盔甲栏窗口 ID。
-	WindowIDArmour = define.WindowIDArmour
+	WindowIDArmour = resources_control_api.WindowIDArmour
 	// WindowIDCrafting 是合成栏窗口 ID。
-	WindowIDCrafting = define.WindowIDCrafting
+	WindowIDCrafting = resources_control_api.WindowIDCrafting
 	// WindowIDUI 是 UI 窗口 ID。
-	WindowIDUI = define.WindowIDUI
+	WindowIDUI = resources_control_api.WindowIDUI
 	// WindowIDDynamic 是动态容器窗口 ID。
-	WindowIDDynamic = define.WindowIDDynamic
+	WindowIDDynamic = resources_control_api.WindowIDDynamic
 )
 
 var (
 	// WindowNameInventory 是玩家背包窗口名。
-	WindowNameInventory = define.WindowNameInventory
+	WindowNameInventory = resources_control_api.WindowNameInventory
 	// WindowNameOffHand 是副手窗口名。
-	WindowNameOffHand = define.WindowNameOffHand
+	WindowNameOffHand = resources_control_api.WindowNameOffHand
 	// WindowNameArmour 是盔甲栏窗口名。
-	WindowNameArmour = define.WindowNameArmour
+	WindowNameArmour = resources_control_api.WindowNameArmour
 	// WindowNameCrafting 是合成栏窗口名。
-	WindowNameCrafting = define.WindowNameCrafting
+	WindowNameCrafting = resources_control_api.WindowNameCrafting
 	// WindowNameUI 是 UI 窗口名。
-	WindowNameUI = define.WindowNameUI
+	WindowNameUI = resources_control_api.WindowNameUI
 )
 
 // NewDynamicContainerWindowName 基于动态容器 ID 构造动态容器窗口名。
 func NewDynamicContainerWindowName(dynamicContainerID DynamicContainerID) WindowName {
-	return define.NewDynamicContainerWindowName(dynamicContainerID)
+	return resources_control_api.NewDynamicContainerWindowName(dynamicContainerID)
 }
 
 // NewWindowName 基于窗口 ID 和动态容器 ID 构造窗口名。
 func NewWindowName(windowID WindowID, dynamicContainerID DynamicContainerID) WindowName {
-	return define.NewWindowName(windowID, dynamicContainerID)
+	return resources_control_api.NewWindowName(windowID, dynamicContainerID)
 }
 
 // Inventory 描述远程单个库存。

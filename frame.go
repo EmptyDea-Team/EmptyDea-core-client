@@ -3,7 +3,7 @@ package client
 import (
 	"context"
 
-	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
+	frame_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame"
 	api_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb"
 	"google.golang.org/grpc"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -14,19 +14,19 @@ type Frame struct {
 	client api_pb.FrameServiceClient
 }
 
-type ConnectionState = define.ConnectionState
+type ConnectionState = frame_api.ConnectionState
 
-type ClosedEvent = define.ClosedEvent
+type ClosedEvent = frame_api.ClosedEvent
 
 // FrameConfig 是启动 Minecraft 连接所需的配置。
-type FrameConfig = define.FrameConfig
+type FrameConfig = frame_api.FrameConfig
 
 // NewFrame 创建框架层客户端。
 func NewFrame(conn grpc.ClientConnInterface) *Frame {
 	return &Frame{client: api_pb.NewFrameServiceClient(conn)}
 }
 
-var _ define.Frame = (*Frame)(nil)
+var _ frame_api.Frame = (*Frame)(nil)
 
 // StartConnection 使用配置启动连接。
 func (f *Frame) StartConnection(ctx context.Context, config FrameConfig) (string, error) {

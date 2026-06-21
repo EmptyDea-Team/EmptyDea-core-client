@@ -3,25 +3,25 @@ package game_interface
 import (
 	"context"
 
-	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
+	game_interface_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/game_interface"
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
 	protocol_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol"
 )
 
 // ReplaceitemPath 指示 replaceitem 时目标物品栏的槽位类型。
-type ReplaceitemPath = define.ReplaceitemPath
+type ReplaceitemPath = game_interface_api.ReplaceitemPath
 
 const (
 	// ReplacePathInventoryOnly 表示只操作背包槽位。
-	ReplacePathInventoryOnly = define.ReplacePathInventoryOnly
+	ReplacePathInventoryOnly = game_interface_api.ReplacePathInventoryOnly
 	// ReplacePathHotbarOnly 表示只操作快捷栏槽位。
-	ReplacePathHotbarOnly = define.ReplacePathHotbarOnly
+	ReplacePathHotbarOnly = game_interface_api.ReplacePathHotbarOnly
 	// ReplacePathInventory 表示同时允许背包和快捷栏槽位。
-	ReplacePathInventory = define.ReplacePathInventory
+	ReplacePathInventory = game_interface_api.ReplacePathInventory
 )
 
 // ReplaceitemInfo 指示要通过 replaceitem 生成的物品的基本信息。
-type ReplaceitemInfo = define.ReplaceitemInfo
+type ReplaceitemInfo = game_interface_api.ReplaceitemInfo
 
 // Replaceitem 是远程 replaceitem 实现。
 type Replaceitem struct {
