@@ -3,23 +3,14 @@ package resources_control
 import (
 	"context"
 
+	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
 	packet_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol/packet"
 	uqholder_client "github.com/EmptyDea-Team/EmptyDea-core-client/resources_control/uqholder"
 	"google.golang.org/grpc"
 )
 
-// BotInfo 是当前机器人基础登录信息。
-type BotInfo struct {
-	// BotName 是机器人玩家名。
-	BotName string
-	// XUID 是机器人 Xbox 用户 ID。
-	XUID string
-	// EntityUniqueID 是机器人实体唯一 ID。
-	EntityUniqueID int64
-	// EntityRuntimeID 是机器人实体运行时 ID。
-	EntityRuntimeID uint64
-}
+type BotInfo = define.BotInfo
 
 // Resources 是面向 core/resources_control 风格的远程资源中心。
 type Resources struct {
@@ -102,3 +93,5 @@ func (r *ResourcesService) WritePacket(ctx context.Context, p *packet_pb.Packet)
 	_, err = r.client.WritePacket(ctx, &resources_control_pb.WritePacketRequest{Packet: p})
 	return err
 }
+
+var _ define.Resources = (*Resources)(nil)

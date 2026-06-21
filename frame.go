@@ -14,19 +14,9 @@ type Frame struct {
 	client api_pb.FrameServiceClient
 }
 
-// ConnectionState 描述当前受管连接是否可用。
-type ConnectionState struct {
-	// Connected 表示当前连接是否可用。
-	Connected bool
-	// CloseReason 是连接关闭原因。
-	CloseReason string
-}
+type ConnectionState = define.ConnectionState
 
-// ClosedEvent 是连接关闭事件。
-type ClosedEvent struct {
-	// Reason 是连接关闭原因。
-	Reason string
-}
+type ClosedEvent = define.ClosedEvent
 
 // FrameConfig 是启动 Minecraft 连接所需的配置。
 type FrameConfig = define.FrameConfig
@@ -35,6 +25,8 @@ type FrameConfig = define.FrameConfig
 func NewFrame(conn grpc.ClientConnInterface) *Frame {
 	return &Frame{client: api_pb.NewFrameServiceClient(conn)}
 }
+
+var _ define.Frame = (*Frame)(nil)
 
 // StartConnection 使用配置启动连接。
 func (f *Frame) StartConnection(ctx context.Context, config FrameConfig) (string, error) {

@@ -1,6 +1,7 @@
 package client
 
 import (
+	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
 	gi_client "github.com/EmptyDea-Team/EmptyDea-core-client/game_interface"
 	rc_client "github.com/EmptyDea-Team/EmptyDea-core-client/resources_control"
 	"google.golang.org/grpc"
@@ -49,3 +50,5 @@ func (c *Client) Close() error {
 	}
 	return c.grpcConn.Close()
 }
+
+var _ define.Client[*Frame, *rc_client.Resources, *gi_client.Commands, *gi_client.GameInterface] = (*Client)(nil)

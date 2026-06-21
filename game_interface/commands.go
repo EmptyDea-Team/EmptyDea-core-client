@@ -3,6 +3,7 @@ package game_interface
 import (
 	"context"
 
+	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
 	packet_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol/packet"
 )
@@ -69,3 +70,5 @@ func commandOutput(resp *game_interface_pb.SendCommandWithResponseResponse, err 
 	}
 	return resp.Output, nil
 }
+
+var _ define.Commands = (*Commands)(nil)
