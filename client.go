@@ -2,6 +2,8 @@ package client
 
 import (
 	frame_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame"
+	game_interface_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/game_interface"
+	resources_control_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control"
 	gi_client "github.com/EmptyDea-Team/EmptyDea-core-client/game_interface"
 	rc_client "github.com/EmptyDea-Team/EmptyDea-core-client/resources_control"
 	"google.golang.org/grpc"
@@ -29,17 +31,17 @@ func (c *Client) Conn() *grpc.ClientConn {
 }
 
 // Frame 返回框架层服务客户端。
-func (c *Client) Frame() *Frame {
+func (c *Client) Frame() frame_api.Frame {
 	return c.frame
 }
 
 // Resources 返回资源层客户端集合。
-func (c *Client) Resources() *rc_client.Resources {
+func (c *Client) Resources() resources_control_api.Resources {
 	return rc_client.New(c.conn)
 }
 
 // GameInterface 返回游戏交互层客户端集合。
-func (c *Client) GameInterface() *gi_client.GameInterface {
+func (c *Client) GameInterface() game_interface_api.GameInterface {
 	return gi_client.New(c.conn)
 }
 
@@ -51,4 +53,4 @@ func (c *Client) Close() error {
 	return c.grpcConn.Close()
 }
 
-var _ frame_api.Client[*Frame, *rc_client.Resources, *gi_client.GameInterface] = (*Client)(nil)
+var _ frame_api.Client = (*Client)(nil)

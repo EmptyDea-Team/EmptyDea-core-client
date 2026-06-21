@@ -1,6 +1,7 @@
 package game_interface
 
 import (
+	game_interface_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/game_interface"
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
 	"google.golang.org/grpc"
@@ -45,61 +46,61 @@ func New(conn grpc.ClientConnInterface) *GameInterface {
 }
 
 // Commands 返回机器人在 MC 命令收发上的相关实现。
-func (g *GameInterface) Commands() *Commands {
+func (g *GameInterface) Commands() game_interface_api.Commands {
 	return g.commands
 }
 
 // StructureBackup 返回机器人在结构备份和恢复上的相关实现。
-func (g *GameInterface) StructureBackup() *StructureBackup {
+func (g *GameInterface) StructureBackup() game_interface_api.StructureBackup {
 	return g.structureBackup
 }
 
 // Querytarget 返回机器人在 querytarget 命令上的实现。
-func (g *GameInterface) Querytarget() *Querytarget {
+func (g *GameInterface) Querytarget() game_interface_api.Querytarget {
 	return g.querytarget
 }
 
 // Movement 返回机器人在移动上的相关实现。
-func (g *GameInterface) Movement() *Movement {
+func (g *GameInterface) Movement() game_interface_api.Movement {
 	return g.movement
 }
 
 // SetBlock 返回机器人在方块放置上的相关实现。
-func (g *GameInterface) SetBlock() *SetBlock {
+func (g *GameInterface) SetBlock() game_interface_api.SetBlock {
 	return g.setblock
 }
 
 // Replaceitem 返回机器人在 Replaceitem 命令上的简单包装。
-func (g *GameInterface) Replaceitem() *Replaceitem {
+func (g *GameInterface) Replaceitem() game_interface_api.Replaceitem {
 	return g.replaceitem
 }
 
 // BotClick 返回机器人在点击操作上的相关实现。
-func (g *GameInterface) BotClick() *BotClick {
+func (g *GameInterface) BotClick() game_interface_api.BotClick {
 	return g.botClick
 }
 
 // ItemStackOperation 返回机器人在物品堆栈操作请求上的相关实现。
-func (g *GameInterface) ItemStackOperation() *ItemStackOperation {
+func (g *GameInterface) ItemStackOperation() game_interface_api.ItemStackOperation {
 	return g.itemStackOperation
 }
 
 // ContainerOpenAndClose 返回机器人在容器打开和关闭上的相关实现。
-func (g *GameInterface) ContainerOpenAndClose() *ContainerOpenAndClose {
+func (g *GameInterface) ContainerOpenAndClose() game_interface_api.ContainerOpenAndClose {
 	return g.containerOpenAndClose
 }
 
 // ItemCopy 返回机器人在物品复制上的相关实现。
-func (g *GameInterface) ItemCopy() *ItemCopy {
+func (g *GameInterface) ItemCopy() game_interface_api.ItemCopy {
 	return g.itemCopy
 }
 
 // ItemTransition 返回机器人在物品状态转移上的实现。
-func (g *GameInterface) ItemTransition() *ItemTransition {
+func (g *GameInterface) ItemTransition() game_interface_api.ItemTransition {
 	return g.itemTransition
 }
 
 // PlayerKit 返回机器人在在线玩家查询和交互上的实现。
-func (g *GameInterface) PlayerKit() *PlayerKit {
+func (g *GameInterface) PlayerKit() game_interface_api.PlayerKit {
 	return g.playerKit
 }

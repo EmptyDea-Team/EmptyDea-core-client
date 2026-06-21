@@ -3,6 +3,7 @@ package uqholder
 import (
 	"context"
 
+	uqholder_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control/uqholder"
 	client_convertutil "github.com/EmptyDea-Team/EmptyDea-core-client/convertutil"
 
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
@@ -14,7 +15,7 @@ type Entities struct {
 }
 
 // GetByRuntimeID 根据实体运行时 ID 查询实体状态。
-func (e *Entities) GetByRuntimeID(ctx context.Context, runtimeID uint64) (entity *Entity, existed bool, err error) {
+func (e *Entities) GetByRuntimeID(ctx context.Context, runtimeID uint64) (entity uqholder_api.Entity, existed bool, err error) {
 	resp, err := e.client.GetEntityByRuntimeID(ctx, &resources_control_pb.EntityRef{RuntimeID: runtimeID})
 	if err != nil {
 		return nil, false, err
@@ -70,7 +71,7 @@ func (e *Entity) GetEffectTypes(ctx context.Context) (effectTypes []int32, exist
 }
 
 // GetEffect 根据效果类型查询实体身上的药水效果状态。
-func (e *Entity) GetEffect(ctx context.Context, effectType int32) (mobEffect *MobEffect, existed bool, err error) {
+func (e *Entity) GetEffect(ctx context.Context, effectType int32) (mobEffect uqholder_api.MobEffect, existed bool, err error) {
 	types, ok, err := e.GetEffectTypes(ctx)
 	if err != nil || !ok {
 		return nil, false, err

@@ -4,6 +4,7 @@ import (
 	"context"
 
 	resources_control_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control"
+	uqholder_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control/uqholder"
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
 	packet_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol/packet"
 	uqholder_client "github.com/EmptyDea-Team/EmptyDea-core-client/resources_control/uqholder"
@@ -45,27 +46,27 @@ func (r *Resources) WritePacket(ctx context.Context, p *packet_pb.Packet) (err e
 }
 
 // Inventories 返回库存的相关资源。
-func (r *Resources) Inventories() (inventories *Inventories) {
+func (r *Resources) Inventories() resources_control_api.Inventories {
 	return r.inventories
 }
 
 // Container 返回容器的相关资源。
-func (r *Resources) Container() (container *ContainerManager) {
+func (r *Resources) Container() resources_control_api.ContainerManager {
 	return r.container
 }
 
 // PacketListener 返回一个可撤销的数据包监听实现。
-func (r *Resources) PacketListener() (packetListener *PacketListener) {
+func (r *Resources) PacketListener() resources_control_api.PacketListener {
 	return r.packetListener
 }
 
 // ConstantPacket 返回常量数据包的有关实现。
-func (r *Resources) ConstantPacket() (constantPacket *ConstantPacket) {
+func (r *Resources) ConstantPacket() resources_control_api.ConstantPacket {
 	return r.constantPacket
 }
 
 // UQHolder 返回轻量状态集合。
-func (r *Resources) UQHolder() (uqholder *UQHolder) {
+func (r *Resources) UQHolder() uqholder_api.UQHolder {
 	return r.uqholder
 }
 

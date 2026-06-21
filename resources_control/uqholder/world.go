@@ -3,6 +3,7 @@ package uqholder
 import (
 	"context"
 
+	uqholder_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control/uqholder"
 	client_convertutil "github.com/EmptyDea-Team/EmptyDea-core-client/convertutil"
 
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
@@ -58,7 +59,7 @@ func (w *World) GetGameRuleNames(ctx context.Context) (names []string, err error
 }
 
 // GetGameRule 根据名称返回单条游戏规则。
-func (w *World) GetGameRule(ctx context.Context, name string) (gameRule *GameRule, existed bool, err error) {
+func (w *World) GetGameRule(ctx context.Context, name string) (gameRule uqholder_api.GameRule, existed bool, err error) {
 	value, ok, err := client_convertutil.StringValue(w.client.GetGameRuleValue(ctx, &resources_control_pb.GameRuleKey{Name: name}))
 	if err != nil || !ok {
 		return nil, false, err

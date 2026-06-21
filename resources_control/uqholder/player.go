@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	uqholder_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/resources_control/uqholder"
 	client_convertutil "github.com/EmptyDea-Team/EmptyDea-core-client/convertutil"
 
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
@@ -135,7 +136,7 @@ func (p *Player) GetTick(ctx context.Context) (tick uint64, ok bool, err error) 
 }
 
 // GetAbilities 返回玩家权限和能力查询接口。
-func (p *Player) GetAbilities() (abilities *PlayerAbilities) {
+func (p *Player) GetAbilities() uqholder_api.PlayerAbilities {
 	return &PlayerAbilities{client: p.client, ref: p.ref}
 }
 

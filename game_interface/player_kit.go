@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	game_interface_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/game_interface"
 	resources_uqholder "github.com/EmptyDea-Team/EmptyDea-core-client/resources_control/uqholder"
 
 	game_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control"
@@ -78,7 +79,7 @@ func (p Player) SendRawActionBar(ctx context.Context, rawText string) error {
 }
 
 // OpenAbility 创建玩家能力变更构建器。
-func (p Player) OpenAbility(ctx context.Context) *AbilityBuilder {
+func (p Player) OpenAbility(ctx context.Context) game_interface_api.AbilityBuilder {
 	return &AbilityBuilder{player: p, ctx: ctx}
 }
 
@@ -89,7 +90,7 @@ type AbilityBuilder struct {
 	err    error
 }
 
-func (b *AbilityBuilder) setAbility(action func(context.Context, *game_interface_pb.PlayerAbilityRequest, ...grpc.CallOption) (*game_interface_pb.PlayerActionResponse, error), allow bool) *AbilityBuilder {
+func (b *AbilityBuilder) setAbility(action func(context.Context, *game_interface_pb.PlayerAbilityRequest, ...grpc.CallOption) (*game_interface_pb.PlayerActionResponse, error), allow bool) game_interface_api.AbilityBuilder {
 	if b.err != nil {
 		return b
 	}
@@ -98,42 +99,42 @@ func (b *AbilityBuilder) setAbility(action func(context.Context, *game_interface
 }
 
 // SetBuildAbility 暂存玩家是否可以放置方块。
-func (b *AbilityBuilder) SetBuildAbility(allow bool) *AbilityBuilder {
+func (b *AbilityBuilder) SetBuildAbility(allow bool) game_interface_api.AbilityBuilder {
 	return b.setAbility(b.player.client.SetBuildAbility, allow)
 }
 
 // SetMineAbility 暂存玩家是否可以挖掘方块。
-func (b *AbilityBuilder) SetMineAbility(allow bool) *AbilityBuilder {
+func (b *AbilityBuilder) SetMineAbility(allow bool) game_interface_api.AbilityBuilder {
 	return b.setAbility(b.player.client.SetMineAbility, allow)
 }
 
 // SetDoorsAndSwitchesAbility 暂存玩家是否可以使用门和开关。
-func (b *AbilityBuilder) SetDoorsAndSwitchesAbility(allow bool) *AbilityBuilder {
+func (b *AbilityBuilder) SetDoorsAndSwitchesAbility(allow bool) game_interface_api.AbilityBuilder {
 	return b.setAbility(b.player.client.SetDoorsAndSwitchesAbility, allow)
 }
 
 // SetOpenContainersAbility 暂存玩家是否可以打开容器。
-func (b *AbilityBuilder) SetOpenContainersAbility(allow bool) *AbilityBuilder {
+func (b *AbilityBuilder) SetOpenContainersAbility(allow bool) game_interface_api.AbilityBuilder {
 	return b.setAbility(b.player.client.SetOpenContainersAbility, allow)
 }
 
 // SetAttackPlayersAbility 暂存玩家是否可以攻击玩家。
-func (b *AbilityBuilder) SetAttackPlayersAbility(allow bool) *AbilityBuilder {
+func (b *AbilityBuilder) SetAttackPlayersAbility(allow bool) game_interface_api.AbilityBuilder {
 	return b.setAbility(b.player.client.SetAttackPlayersAbility, allow)
 }
 
 // SetAttackMobsAbility 暂存玩家是否可以攻击生物。
-func (b *AbilityBuilder) SetAttackMobsAbility(allow bool) *AbilityBuilder {
+func (b *AbilityBuilder) SetAttackMobsAbility(allow bool) game_interface_api.AbilityBuilder {
 	return b.setAbility(b.player.client.SetAttackMobsAbility, allow)
 }
 
 // SetOperatorCommandsAbility 暂存玩家是否可以使用操作员命令。
-func (b *AbilityBuilder) SetOperatorCommandsAbility(allow bool) *AbilityBuilder {
+func (b *AbilityBuilder) SetOperatorCommandsAbility(allow bool) game_interface_api.AbilityBuilder {
 	return b.setAbility(b.player.client.SetOperatorCommandsAbility, allow)
 }
 
 // SetTeleportAbility 暂存玩家是否可以传送。
-func (b *AbilityBuilder) SetTeleportAbility(allow bool) *AbilityBuilder {
+func (b *AbilityBuilder) SetTeleportAbility(allow bool) game_interface_api.AbilityBuilder {
 	return b.setAbility(b.player.client.SetTeleportAbility, allow)
 }
 
@@ -156,12 +157,12 @@ type PlayerKit struct {
 }
 
 // ListOnlinePlayers 返回当前在线玩家列表。
-func (p *PlayerKit) ListOnlinePlayers(ctx context.Context) ([]Player, error) {
+func (p *PlayerKit) ListOnlinePlayers(ctx context.Context) ([]game_interface_api.Player, error) {
 	resp, err := p.client.ListOnlinePlayers(ctx, &game_control_pb.Empty{})
 	if err != nil {
 		return nil, err
 	}
-	players := make([]Player, 0, len(resp.Players))
+	players := make([]game_interface_api.Player, 0, len(resp.Players))
 	for _, ref := range resp.Players {
 		if ref != nil {
 			players = append(players, p.newPlayer(ref))
@@ -171,30 +172,30 @@ func (p *PlayerKit) ListOnlinePlayers(ctx context.Context) ([]Player, error) {
 }
 
 // GetPlayerByName 根据玩家名查询玩家。
-func (p *PlayerKit) GetPlayerByName(ctx context.Context, name string) (Player, bool, error) {
+func (p *PlayerKit) GetPlayerByName(ctx context.Context, name string) (game_interface_api.Player, bool, error) {
 	resp, err := p.client.GetPlayerByName(ctx, &game_interface_pb.GetPlayerByNameRequest{Name: name})
 	return p.playerLookup(resp, err)
 }
 
 // GetPlayerByUUIDString 根据玩家 UUID 字符串查询玩家。
-func (p *PlayerKit) GetPlayerByUUIDString(ctx context.Context, uuidString string) (Player, bool, error) {
+func (p *PlayerKit) GetPlayerByUUIDString(ctx context.Context, uuidString string) (game_interface_api.Player, bool, error) {
 	resp, err := p.client.GetPlayerByUUIDString(ctx, &game_interface_pb.GetPlayerByUUIDRequest{UUID: uuidString})
 	return p.playerLookup(resp, err)
 }
 
 // GetPlayerByUniqueID 根据实体唯一 ID 查询玩家。
-func (p *PlayerKit) GetPlayerByUniqueID(ctx context.Context, id int64) (Player, bool, error) {
+func (p *PlayerKit) GetPlayerByUniqueID(ctx context.Context, id int64) (game_interface_api.Player, bool, error) {
 	resp, err := p.client.GetPlayerByUniqueID(ctx, &game_interface_pb.GetPlayerByUniqueIDRequest{UniqueID: id})
 	return p.playerLookup(resp, err)
 }
 
 // GetPlayerByRuntimeID 根据实体运行时 ID 查询玩家。
-func (p *PlayerKit) GetPlayerByRuntimeID(ctx context.Context, id uint64) (Player, bool, error) {
+func (p *PlayerKit) GetPlayerByRuntimeID(ctx context.Context, id uint64) (game_interface_api.Player, bool, error) {
 	resp, err := p.client.GetPlayerByRuntimeID(ctx, &game_interface_pb.GetPlayerByRuntimeIDRequest{RuntimeID: id})
 	return p.playerLookup(resp, err)
 }
 
-func (p *PlayerKit) playerLookup(resp *game_interface_pb.PlayerLookupResponse, err error) (Player, bool, error) {
+func (p *PlayerKit) playerLookup(resp *game_interface_pb.PlayerLookupResponse, err error) (game_interface_api.Player, bool, error) {
 	if err != nil {
 		return Player{}, false, err
 	}

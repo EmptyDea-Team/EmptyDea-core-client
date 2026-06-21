@@ -83,7 +83,7 @@ type Inventories struct {
 }
 
 // GetInventory 返回窗口名为 windowName 的库存。
-func (i *Inventories) GetInventory(ctx context.Context, windowName WindowName) (inventory *Inventory, existed bool, err error) {
+func (i *Inventories) GetInventory(ctx context.Context, windowName WindowName) (inventory resources_control_api.Inventory, existed bool, err error) {
 	resp, err := i.client.GetInventory(ctx, &resources_control_pb.GetInventoryRequest{WindowName: windowNameToProto(windowName)})
 	if err != nil {
 		return nil, false, err

@@ -3,6 +3,7 @@ package item_stack_transaction
 import (
 	"context"
 
+	item_stack_transaction_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/game_interface/item_stack_transaction"
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
 	protocol_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol"
 	packet_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol/packet"
@@ -11,7 +12,7 @@ import (
 
 // Discord 丢弃曾经执行的更改。
 // 从本质上说，它将清空底层操作序列。
-func (i *ItemStackTransaction) Discord() *ItemStackTransaction {
+func (i *ItemStackTransaction) Discord() item_stack_transaction_api.ItemStackTransaction {
 	for index := range i.operations {
 		i.operations[index] = nil
 	}
@@ -20,7 +21,7 @@ func (i *ItemStackTransaction) Discord() *ItemStackTransaction {
 }
 
 // Discard 是 Discord 的别名，用于避免误拼写时降低可读性。
-func (i *ItemStackTransaction) Discard() *ItemStackTransaction {
+func (i *ItemStackTransaction) Discard() item_stack_transaction_api.ItemStackTransaction {
 	return i.Discord()
 }
 

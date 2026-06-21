@@ -1,13 +1,14 @@
 package item_stack_transaction
 
 import (
+	item_stack_transaction_api "github.com/EmptyDea-Team/EmptyDea-core-api/frame/game_interface/item_stack_transaction"
 	"github.com/EmptyDea-Team/EmptyDea-core-client/game_interface/item_stack_operation"
 	"github.com/EmptyDea-Team/EmptyDea-core-client/resources_control"
 )
 
 // MoveItem 将 source 处的物品移动到 destination 处，
 // 且只移动 count 个物品。
-func (i *ItemStackTransaction) MoveItem(source resources_control.SlotLocation, destination resources_control.SlotLocation, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) MoveItem(source resources_control.SlotLocation, destination resources_control.SlotLocation, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.Move{
 		Source:      source,
 		Destination: destination,
@@ -18,7 +19,7 @@ func (i *ItemStackTransaction) MoveItem(source resources_control.SlotLocation, d
 
 // MoveBetweenInventory 将背包中 source 处的物品移动到 destination 处，
 // 且只移动 count 个物品。
-func (i *ItemStackTransaction) MoveBetweenInventory(source resources_control.SlotID, destination resources_control.SlotID, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) MoveBetweenInventory(source resources_control.SlotID, destination resources_control.SlotID, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.MoveBetweenInventory{
 		Source:      source,
 		Destination: destination,
@@ -38,7 +39,7 @@ func (i *ItemStackTransaction) MoveBetweenDynamicContainer(
 	source resources_control.SlotID,
 	destination resources_control.SlotID,
 	count uint8,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.MoveBetweenDynamicContainer{
 		DynamicContainerID: dynamicContainerID,
 		Source:             source,
@@ -55,7 +56,7 @@ func (i *ItemStackTransaction) MoveToDynamicContainer(
 	dynamicContainerID resources_control.DynamicContainerID,
 	destination resources_control.SlotID,
 	count uint8,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.MoveToDynamicContainer{
 		Source:             source,
 		DynamicContainerID: dynamicContainerID,
@@ -72,7 +73,7 @@ func (i *ItemStackTransaction) MoveFromDynamicContainer(
 	source resources_control.SlotID,
 	destination resources_control.SlotID,
 	count uint8,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.MoveFromDynamicContainer{
 		DynamicContainerID: dynamicContainerID,
 		Source:             source,
@@ -84,7 +85,7 @@ func (i *ItemStackTransaction) MoveFromDynamicContainer(
 
 // MoveBetweenContainer 将已打开容器中 source 处的物品
 // 移动到已打开容器的 destination 处，且只移动 count 个物品。
-func (i *ItemStackTransaction) MoveBetweenContainer(source resources_control.SlotID, destination resources_control.SlotID, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) MoveBetweenContainer(source resources_control.SlotID, destination resources_control.SlotID, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.MoveBetweenContainer{
 		Source:      source,
 		Destination: destination,
@@ -95,7 +96,7 @@ func (i *ItemStackTransaction) MoveBetweenContainer(source resources_control.Slo
 
 // MoveToContainer 将背包中 source 处的物品移动到已打开容器的
 // destination 处，且只移动 count 个物品。
-func (i *ItemStackTransaction) MoveToContainer(source resources_control.SlotID, destination resources_control.SlotID, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) MoveToContainer(source resources_control.SlotID, destination resources_control.SlotID, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.MoveToContainer{
 		Source:      source,
 		Destination: destination,
@@ -106,7 +107,7 @@ func (i *ItemStackTransaction) MoveToContainer(source resources_control.SlotID, 
 
 // MoveToInventory 将已打开容器中 source 处的物品移动到
 // 背包的 destination 处，且只移动 count 个物品。
-func (i *ItemStackTransaction) MoveToInventory(source resources_control.SlotID, destination resources_control.SlotID, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) MoveToInventory(source resources_control.SlotID, destination resources_control.SlotID, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.MoveToInventory{
 		Source:      source,
 		Destination: destination,
@@ -117,7 +118,7 @@ func (i *ItemStackTransaction) MoveToInventory(source resources_control.SlotID, 
 
 // MoveToCraftingTable 将背包中 source 处的物品移动
 // 到合成栏的 destination 处，且只移动 count 个物品。
-func (i *ItemStackTransaction) MoveToCraftingTable(source resources_control.SlotID, destination resources_control.SlotID, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) MoveToCraftingTable(source resources_control.SlotID, destination resources_control.SlotID, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.MoveToCraftingTable{
 		Source:      source,
 		Destination: destination,
@@ -128,7 +129,7 @@ func (i *ItemStackTransaction) MoveToCraftingTable(source resources_control.Slot
 
 // MoveFromCraftingTable 将已放入合成栏 source 处的物品
 // 移动到背包的 destination 处，且只移动 count 个物品。
-func (i *ItemStackTransaction) MoveFromCraftingTable(source resources_control.SlotID, destination resources_control.SlotID, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) MoveFromCraftingTable(source resources_control.SlotID, destination resources_control.SlotID, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.MoveFromCraftingTable{
 		Source:      source,
 		Destination: destination,
@@ -138,7 +139,7 @@ func (i *ItemStackTransaction) MoveFromCraftingTable(source resources_control.Sl
 }
 
 // SwapItem 交换 source 处和 destination 处的物品。
-func (i *ItemStackTransaction) SwapItem(source resources_control.SlotLocation, destination resources_control.SlotLocation) *ItemStackTransaction {
+func (i *ItemStackTransaction) SwapItem(source resources_control.SlotLocation, destination resources_control.SlotLocation) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.Swap{
 		Source:      source,
 		Destination: destination,
@@ -148,7 +149,7 @@ func (i *ItemStackTransaction) SwapItem(source resources_control.SlotLocation, d
 
 // SwapBetweenInventory 交换背包中 source
 // 处和背包中 destination 处的物品。
-func (i *ItemStackTransaction) SwapBetweenInventory(source resources_control.SlotID, destination resources_control.SlotID) *ItemStackTransaction {
+func (i *ItemStackTransaction) SwapBetweenInventory(source resources_control.SlotID, destination resources_control.SlotID) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.SwapBetweenInventory{
 		Source:      source,
 		Destination: destination,
@@ -161,7 +162,7 @@ func (i *ItemStackTransaction) SwapBetweenDynamicContainer(
 	dynamicContainerID resources_control.DynamicContainerID,
 	source resources_control.SlotID,
 	destination resources_control.SlotID,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.SwapBetweenDynamicContainer{
 		DynamicContainerID: dynamicContainerID,
 		Source:             source,
@@ -176,7 +177,7 @@ func (i *ItemStackTransaction) SwapInventoryBetweenDynamicContainer(
 	source resources_control.SlotID,
 	dynamicContainerID resources_control.DynamicContainerID,
 	destination resources_control.SlotID,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.SwapInventoryBetweenDynamicContainer{
 		Source:             source,
 		DynamicContainerID: dynamicContainerID,
@@ -187,7 +188,7 @@ func (i *ItemStackTransaction) SwapInventoryBetweenDynamicContainer(
 
 // SwapInventoryBetweenContainer 交换背包中 source
 // 处和已打开容器 destination 处的物品。
-func (i *ItemStackTransaction) SwapInventoryBetweenContainer(source resources_control.SlotID, destination resources_control.SlotID) *ItemStackTransaction {
+func (i *ItemStackTransaction) SwapInventoryBetweenContainer(source resources_control.SlotID, destination resources_control.SlotID) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.SwapInventoryBetweenContainer{
 		Source:      source,
 		Destination: destination,
@@ -196,7 +197,7 @@ func (i *ItemStackTransaction) SwapInventoryBetweenContainer(source resources_co
 }
 
 // DropItem 将 slot 处的物品丢出，且只丢出 count 个。
-func (i *ItemStackTransaction) DropItem(slot resources_control.SlotLocation, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) DropItem(slot resources_control.SlotLocation, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.Drop{
 		Path:  slot,
 		Count: count,
@@ -206,7 +207,7 @@ func (i *ItemStackTransaction) DropItem(slot resources_control.SlotLocation, cou
 
 // DropInventoryItem 将背包中 slot 处的
 // 物品丢出，且只丢出 count 个。
-func (i *ItemStackTransaction) DropInventoryItem(slot resources_control.SlotID, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) DropInventoryItem(slot resources_control.SlotID, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.DropInventoryItem{
 		Slot:  slot,
 		Count: count,
@@ -219,7 +220,7 @@ func (i *ItemStackTransaction) DropDynamicContainerItem(
 	dynamicContainerID resources_control.DynamicContainerID,
 	slot resources_control.SlotID,
 	count uint8,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.DropDynamicContainerItem{
 		DynamicContainerID: dynamicContainerID,
 		Slot:               slot,
@@ -229,7 +230,7 @@ func (i *ItemStackTransaction) DropDynamicContainerItem(
 }
 
 // DropContainerItem 将已打开容器 slot 处的物品丢出，且只丢出 count 个。
-func (i *ItemStackTransaction) DropContainerItem(slot resources_control.SlotID, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) DropContainerItem(slot resources_control.SlotID, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.DropContainerItem{
 		Slot:  slot,
 		Count: count,
@@ -239,7 +240,7 @@ func (i *ItemStackTransaction) DropContainerItem(slot resources_control.SlotID, 
 
 // GetCreativeItem 从创造物品栏获取 创造物品网络 ID 为
 // creativeItemNetworkID 的物品到 slot 处，且只移动 count 个物品。
-func (i *ItemStackTransaction) GetCreativeItem(creativeItemNetworkID uint32, slot resources_control.SlotLocation, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) GetCreativeItem(creativeItemNetworkID uint32, slot resources_control.SlotLocation, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.CreativeItem{
 		CreativeItemNetworkID: creativeItemNetworkID,
 		Path:                  slot,
@@ -250,7 +251,7 @@ func (i *ItemStackTransaction) GetCreativeItem(creativeItemNetworkID uint32, slo
 
 // GetCreativeItemToInventory 从创造物品栏获取创造物品网络
 // ID 为 creativeItemNetworkID 的物品到背包中的 slot 处，且只移动 count 个物品。
-func (i *ItemStackTransaction) GetCreativeItemToInventory(creativeItemNetworkID uint32, slot resources_control.SlotID, count uint8) *ItemStackTransaction {
+func (i *ItemStackTransaction) GetCreativeItemToInventory(creativeItemNetworkID uint32, slot resources_control.SlotID, count uint8) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.CreativeItemToInventory{
 		CreativeItemNetworkID: creativeItemNetworkID,
 		Slot:                  slot,
@@ -266,7 +267,7 @@ func (i *ItemStackTransaction) GetCreativeItemToDynamicContainer(
 	dynamicContainerID resources_control.DynamicContainerID,
 	slot resources_control.SlotID,
 	count uint8,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.CreativeItemToDynamicContainer{
 		CreativeItemNetworkID: creativeItemNetworkID,
 		DynamicContainerID:    dynamicContainerID,
@@ -277,7 +278,7 @@ func (i *ItemStackTransaction) GetCreativeItemToDynamicContainer(
 }
 
 // RenameItem 将 slot 处的物品全部重命名为 newName。
-func (i *ItemStackTransaction) RenameItem(slot resources_control.SlotLocation, newName string) *ItemStackTransaction {
+func (i *ItemStackTransaction) RenameItem(slot resources_control.SlotLocation, newName string) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.Renaming{
 		Path:    slot,
 		NewName: newName,
@@ -286,7 +287,7 @@ func (i *ItemStackTransaction) RenameItem(slot resources_control.SlotLocation, n
 }
 
 // RenameInventoryItem 将背包中 slot 处的物品全部重命名为 newName。
-func (i *ItemStackTransaction) RenameInventoryItem(slot resources_control.SlotID, newName string) *ItemStackTransaction {
+func (i *ItemStackTransaction) RenameInventoryItem(slot resources_control.SlotID, newName string) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.RenameInventoryItem{
 		Slot:    slot,
 		NewName: newName,
@@ -302,7 +303,7 @@ func (i *ItemStackTransaction) Looming(
 	bannerSlot resources_control.SlotLocation,
 	dyeSlot resources_control.SlotLocation,
 	resultItem item_stack_operation.ExpectedNewItem,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.Looming{
 		PatternName: patternName,
 		PatternPath: patternSlot,
@@ -321,7 +322,7 @@ func (i *ItemStackTransaction) LoomingFromInventory(
 	bannerSlot resources_control.SlotID,
 	dyeSlot resources_control.SlotID,
 	resultItem item_stack_operation.ExpectedNewItem,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.LoomingFromInventory{
 		PatternName: patternName,
 		PatternSlot: patternSlot,
@@ -338,7 +339,7 @@ func (i *ItemStackTransaction) Crafting(
 	resultSlotID resources_control.SlotID,
 	resultCount uint8,
 	resultItem item_stack_operation.ExpectedNewItem,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.Crafting{
 		RecipeNetworkID: recipeNetworkID,
 		ResultSlotID:    resultSlotID,
@@ -354,7 +355,7 @@ func (i *ItemStackTransaction) Trimming(
 	materialPath resources_control.SlotLocation,
 	templatePath resources_control.SlotLocation,
 	resultItem item_stack_operation.ExpectedNewItem,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.Trimming{
 		TrimItem:   trimItemPath,
 		Material:   materialPath,
@@ -371,7 +372,7 @@ func (i *ItemStackTransaction) TrimmingFromInventory(
 	materialSlot resources_control.SlotID,
 	templateSlot resources_control.SlotID,
 	resultItem item_stack_operation.ExpectedNewItem,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.TrimmingFromInventory{
 		TrimItemSlot: trimItemSlot,
 		MaterialSlot: materialSlot,
@@ -387,7 +388,7 @@ func (i *ItemStackTransaction) BeaconPayment(
 	paymentPath resources_control.SlotLocation,
 	primaryEffect int32,
 	secondaryEffect int32,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.BeaconPayment{
 		PaymentPath:     paymentPath,
 		PrimaryEffect:   primaryEffect,
@@ -402,7 +403,7 @@ func (i *ItemStackTransaction) BeaconPaymentFromInventory(
 	paymentSlot resources_control.SlotID,
 	primaryEffect int32,
 	secondaryEffect int32,
-) *ItemStackTransaction {
+) item_stack_transaction_api.ItemStackTransaction {
 	i.operations = append(i.operations, item_stack_operation.BeaconPaymentFromInventory{
 		PaymentSlot:     paymentSlot,
 		PrimaryEffect:   primaryEffect,
