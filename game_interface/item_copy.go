@@ -3,28 +3,17 @@ package game_interface
 import (
 	"context"
 
-	resources_control_client "github.com/EmptyDea-Team/EmptyDea-core-client/resources_control"
-
+	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
 )
 
 type (
 	// ItemType 指示该物品在单次操作中的物品类型。
-	ItemType uint8
+	ItemType = define.ItemType
 	// ItemInfo 是物品的信息。
-	ItemInfo struct {
-		// Count 是物品数量。
-		Count uint8
-		// ItemType 指示该物品在单次操作中的物品类型。
-		ItemType ItemType
-	}
+	ItemInfo = define.ItemInfo
 	// ItemInfoWithSlot 是物品的信息，同时指示该物品位于哪个槽位。
-	ItemInfoWithSlot struct {
-		// Slot 是物品所在槽位。
-		Slot resources_control_client.SlotID
-		// ItemInfo 是该槽位上的物品信息。
-		ItemInfo ItemInfo
-	}
+	ItemInfoWithSlot = define.ItemInfoWithSlot
 )
 
 // ItemCopy 是远程物品拷贝实现。

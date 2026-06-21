@@ -3,76 +3,60 @@ package resources_control
 import (
 	"context"
 
+	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
 	protocol_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol"
 )
 
-// SlotID 是单个物品栏槽位的索引，它是从 0 开始索引的。
-type SlotID uint8
-
-// WindowID 是机器人已打开(或持有)的库存的窗口 ID。
-type WindowID uint32
-
-// DynamicContainerID 是机器人已打开(或持有)的动态库存的容器 ID。
-type DynamicContainerID uint32
-
-// WindowName 唯一标识一个普通窗口或动态容器窗口。
-type WindowName struct {
-	// WindowID 是窗口 ID。
-	WindowID WindowID
-	// DynamicContainerID 是动态容器 ID；非动态容器窗口时为 0。
-	DynamicContainerID DynamicContainerID
-}
-
-// SlotLocation 描述一个物品的所在的位置。
-type SlotLocation struct {
-	WindowName
-	// SlotID 是窗口内槽位索引。
-	SlotID SlotID
-}
+type (
+	// SlotID 是单个物品栏槽位的索引，它是从 0 开始索引的。
+	SlotID = define.SlotID
+	// WindowID 是机器人已打开(或持有)的库存的窗口 ID。
+	WindowID = define.WindowID
+	// DynamicContainerID 是机器人已打开(或持有)的动态库存的容器 ID。
+	DynamicContainerID = define.DynamicContainerID
+	// WindowName 唯一标识一个普通窗口或动态容器窗口。
+	WindowName = define.WindowName
+	// SlotLocation 描述一个物品的所在的位置。
+	SlotLocation = define.SlotLocation
+)
 
 const (
 	// WindowIDInventory 是玩家背包窗口 ID。
-	WindowIDInventory WindowID = WindowID(protocol_pb.WindowIDEnum_WindowIDInventory)
+	WindowIDInventory = define.WindowIDInventory
 	// WindowIDOffHand 是副手窗口 ID。
-	WindowIDOffHand WindowID = WindowID(protocol_pb.WindowIDEnum_WindowIDOffHand)
+	WindowIDOffHand = define.WindowIDOffHand
 	// WindowIDArmour 是盔甲栏窗口 ID。
-	WindowIDArmour WindowID = WindowID(protocol_pb.WindowIDEnum_WindowIDArmour)
+	WindowIDArmour = define.WindowIDArmour
 	// WindowIDCrafting 是合成栏窗口 ID。
-	WindowIDCrafting WindowID = WindowID(protocol_pb.WindowIDEnum_WindowIDCrafting)
+	WindowIDCrafting = define.WindowIDCrafting
 	// WindowIDUI 是 UI 窗口 ID。
-	WindowIDUI WindowID = WindowID(protocol_pb.WindowIDEnum_WindowIDUI)
+	WindowIDUI = define.WindowIDUI
 	// WindowIDDynamic 是动态容器窗口 ID。
-	WindowIDDynamic WindowID = WindowID(protocol_pb.WindowIDEnum_WindowIDDynamic)
+	WindowIDDynamic = define.WindowIDDynamic
 )
 
 var (
 	// WindowNameInventory 是玩家背包窗口名。
-	WindowNameInventory = WindowName{WindowID: WindowIDInventory}
+	WindowNameInventory = define.WindowNameInventory
 	// WindowNameOffHand 是副手窗口名。
-	WindowNameOffHand = WindowName{WindowID: WindowIDOffHand}
+	WindowNameOffHand = define.WindowNameOffHand
 	// WindowNameArmour 是盔甲栏窗口名。
-	WindowNameArmour = WindowName{WindowID: WindowIDArmour}
+	WindowNameArmour = define.WindowNameArmour
 	// WindowNameCrafting 是合成栏窗口名。
-	WindowNameCrafting = WindowName{WindowID: WindowIDCrafting}
+	WindowNameCrafting = define.WindowNameCrafting
 	// WindowNameUI 是 UI 窗口名。
-	WindowNameUI = WindowName{WindowID: WindowIDUI}
+	WindowNameUI = define.WindowNameUI
 )
 
 // NewDynamicContainerWindowName 基于动态容器 ID 构造动态容器窗口名。
 func NewDynamicContainerWindowName(dynamicContainerID DynamicContainerID) WindowName {
-	return WindowName{
-		WindowID:           WindowIDDynamic,
-		DynamicContainerID: dynamicContainerID,
-	}
+	return define.NewDynamicContainerWindowName(dynamicContainerID)
 }
 
 // NewWindowName 基于窗口 ID 和动态容器 ID 构造窗口名。
 func NewWindowName(windowID WindowID, dynamicContainerID DynamicContainerID) WindowName {
-	if windowID != WindowIDDynamic {
-		dynamicContainerID = 0
-	}
-	return WindowName{WindowID: windowID, DynamicContainerID: dynamicContainerID}
+	return define.NewWindowName(windowID, dynamicContainerID)
 }
 
 // Inventory 描述远程单个库存。

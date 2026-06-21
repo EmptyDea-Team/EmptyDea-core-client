@@ -51,4 +51,4 @@ func (c *Client) Close() error {
 	return c.grpcConn.Close()
 }
 
-var _ define.Client[*Frame, *rc_client.Resources, *gi_client.Commands, *gi_client.GameInterface] = (*Client)(nil)
+var _ define.Client[*Frame, *rc_client.Resources, *gi_client.GameInterface] = (*Client)(nil)

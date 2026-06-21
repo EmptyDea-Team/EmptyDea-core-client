@@ -1,7 +1,6 @@
 package game_interface
 
 import (
-	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
 	resources_control_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/resources_control"
 	"google.golang.org/grpc"
@@ -104,5 +103,3 @@ func (g *GameInterface) ItemTransition() *ItemTransition {
 func (g *GameInterface) PlayerKit() *PlayerKit {
 	return g.playerKit
 }
-
-var _ define.GameInterface[*Commands] = (*GameInterface)(nil)

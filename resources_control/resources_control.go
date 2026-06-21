@@ -93,5 +93,3 @@ func (r *ResourcesService) WritePacket(ctx context.Context, p *packet_pb.Packet)
 	_, err = r.client.WritePacket(ctx, &resources_control_pb.WritePacketRequest{Packet: p})
 	return err
 }
-
-var _ define.Resources = (*Resources)(nil)

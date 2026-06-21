@@ -1,30 +1,27 @@
 package item_stack_operation
 
+import "github.com/EmptyDea-Team/EmptyDea-core-api/define"
+
 const (
 	// IDItemStackOperationMove 是物品移动操作编号。
-	IDItemStackOperationMove uint8 = iota
+	IDItemStackOperationMove = define.IDItemStackOperationMove
 	// IDItemStackOperationSwap 是物品交换操作编号。
-	IDItemStackOperationSwap
+	IDItemStackOperationSwap = define.IDItemStackOperationSwap
 	// IDItemStackOperationDrop 是物品丢弃操作编号。
-	IDItemStackOperationDrop
+	IDItemStackOperationDrop = define.IDItemStackOperationDrop
 	// IDItemStackOperationCreativeItem 是创造物品获取操作编号。
-	IDItemStackOperationCreativeItem
+	IDItemStackOperationCreativeItem = define.IDItemStackOperationCreativeItem
 	// IDItemStackOperationHighLevelRenaming 是高层重命名操作编号。
-	IDItemStackOperationHighLevelRenaming
+	IDItemStackOperationHighLevelRenaming = define.IDItemStackOperationHighLevelRenaming
 	// IDItemStackOperationHighLevelLooming 是高层织布机操作编号。
-	IDItemStackOperationHighLevelLooming
+	IDItemStackOperationHighLevelLooming = define.IDItemStackOperationHighLevelLooming
 	// IDItemStackOperationHighLevelCrafting 是高层合成操作编号。
-	IDItemStackOperationHighLevelCrafting
+	IDItemStackOperationHighLevelCrafting = define.IDItemStackOperationHighLevelCrafting
 	// IDItemStackOperationHighLevelTrimming 是高层锻造台纹饰操作编号。
-	IDItemStackOperationHighLevelTrimming
+	IDItemStackOperationHighLevelTrimming = define.IDItemStackOperationHighLevelTrimming
 	// IDItemStackOperationHighLevelBeaconPayment 是高层信标支付操作编号。
-	IDItemStackOperationHighLevelBeaconPayment
+	IDItemStackOperationHighLevelBeaconPayment = define.IDItemStackOperationHighLevelBeaconPayment
 )
 
 // ItemStackOperation 指示所有可提交给远端服务端执行的物品操作。
-type ItemStackOperation interface {
-	// CanInline 指示该物品操作是否可以内联到单个物品堆栈操作请求中。
-	CanInline() bool
-	// ID 指示该物品操作的编号，它是自定义的。
-	ID() uint8
-}
+type ItemStackOperation = define.ItemStackOperationData

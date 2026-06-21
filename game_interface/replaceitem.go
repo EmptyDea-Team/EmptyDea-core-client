@@ -3,35 +3,25 @@ package game_interface
 import (
 	"context"
 
-	resources_control_client "github.com/EmptyDea-Team/EmptyDea-core-client/resources_control"
-
+	"github.com/EmptyDea-Team/EmptyDea-core-api/define"
 	game_interface_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/game_control/game_interface"
 	protocol_pb "github.com/EmptyDea-Team/EmptyDea-core-api/pb/minecraft/protocol"
 )
 
 // ReplaceitemPath 指示 replaceitem 时目标物品栏的槽位类型。
-type ReplaceitemPath string
+type ReplaceitemPath = define.ReplaceitemPath
 
 const (
 	// ReplacePathInventoryOnly 表示只操作背包槽位。
-	ReplacePathInventoryOnly ReplaceitemPath = "slot.inventory"
+	ReplacePathInventoryOnly = define.ReplacePathInventoryOnly
 	// ReplacePathHotbarOnly 表示只操作快捷栏槽位。
-	ReplacePathHotbarOnly ReplaceitemPath = "slot.hotbar"
+	ReplacePathHotbarOnly = define.ReplacePathHotbarOnly
 	// ReplacePathInventory 表示同时允许背包和快捷栏槽位。
-	ReplacePathInventory ReplaceitemPath = "slot.inventory | slot.hotbar"
+	ReplacePathInventory = define.ReplacePathInventory
 )
 
 // ReplaceitemInfo 指示要通过 replaceitem 生成的物品的基本信息。
-type ReplaceitemInfo struct {
-	// Name 是物品名称。
-	Name string
-	// Count 是物品数量。
-	Count uint8
-	// MetaData 是物品元数据。
-	MetaData int16
-	// Slot 是目标槽位。
-	Slot resources_control_client.SlotID
-}
+type ReplaceitemInfo = define.ReplaceitemInfo
 
 // Replaceitem 是远程 replaceitem 实现。
 type Replaceitem struct {
